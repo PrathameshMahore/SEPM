@@ -20,12 +20,13 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-  origin: '*', // Allow all origins in development
+  origin: 'https://parking-1o.netlify.app', // Only allow this origin
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
   optionsSuccessStatus: 200
 }));
+
 
 app.use(express.json());
 
