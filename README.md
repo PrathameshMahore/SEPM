@@ -47,3 +47,4 @@ To set up the project locally, follow these steps:
    ```bash
    git clone https://github.com/AdityaWaradkar/IoT_based_smart_parking_system.git
 # SEPM
+# SEPM
