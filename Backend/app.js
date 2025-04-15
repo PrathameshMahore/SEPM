@@ -2,11 +2,13 @@ const express = require("express");
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-const parkingRoutes = require("./routes/parkingDurationRoutes");
+const parkingRoutes = require("./routes/parkingRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const parkingTransactionRoutes = require("./routes/parkingTransactionRoutes");
 const parkingHistoryRoutes = require("./routes/parkingHistoryRoutes");
 const slotRoutes = require("./routes/slotRoutes");
+const nearbyParkingRoutes = require("./routes/nearbyParkingRoutes");
 const cors = require("cors");
 const fetch = require("node-fetch");
 const Slot = require("./models/slot");
@@ -16,9 +18,25 @@ connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// CORS configuration
+app.use(cors({
+  origin: '*', // Allow all origins in development
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 200
+}));
+
 app.use(express.json());
+
+// Add OPTIONS handling for preflight requests
+app.options('*', cors({
+  origin: '*', // Allow all origins in development
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 200
+}));
 
 // Logging middleware
 app.use((req, res, next) => {
@@ -30,10 +48,17 @@ app.use((req, res, next) => {
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/parking", parkingRoutes);
+app.use("/api/booking", bookingRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/parkingTransaction", parkingTransactionRoutes);
 app.use("/api/parkingHistory", parkingHistoryRoutes);
 app.use("/api/slots", slotRoutes);
+app.use("/api/nearby-parking", nearbyParkingRoutes);
+
+// Test endpoint to verify CORS
+app.get("/api/test", (req, res) => {
+  res.json({ message: "CORS is working correctly!" });
+});
 
 // Function to fetch from ThingSpeak
 async function fetchFromThingSpeak() {

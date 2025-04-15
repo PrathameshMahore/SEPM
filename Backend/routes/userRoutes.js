@@ -35,7 +35,15 @@ router.post("/login", async (req, res) => {
     res.status(200).json({
       message: "Login successful",
       userId: user._id,
-      userName: user.name,
+      firstName: user.name.split(' ')[0] || '',
+      lastName: user.name.split(' ').slice(1).join(' ') || '',
+      email: user.email,
+      phone: user.phone || '',
+      address: user.address || '',
+      city: user.city || '',
+      state: user.state || '',
+      zipCode: user.zipCode || '',
+      carNumber: user.carNumber || ''
     });
   } catch (error) {
     res.status(500).json({ message: "Server error" });

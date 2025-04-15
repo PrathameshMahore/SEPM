@@ -30,9 +30,18 @@ const UserLogin = () => {
             autoClose: 1000,
           });
 
-          // Store user ID and name in local storage
-          localStorage.setItem('userId', data.userId); // Store user ID
-          localStorage.setItem('userName', data.userName); // Optionally store user name
+          // Store complete user data in localStorage
+          localStorage.setItem('user', JSON.stringify({
+            userId: data.userId,
+            firstName: data.firstName || '',
+            lastName: data.lastName || '',
+            email: email,
+            phone: data.phone || '',
+            address: data.address || '',
+            city: data.city || '',
+            state: data.state || '',
+            zipCode: data.zipCode || ''
+          }));
 
           // Redirect after a short delay
           setTimeout(() => {

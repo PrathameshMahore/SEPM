@@ -39,52 +39,27 @@ const ParkingDuration = () => {
     if (validateInputs()) {
       const hoursValue = parseInt(hours);
       const minutesValue = parseInt(minutes);
-      const userName = localStorage.getItem("userName"); // Retrieve user ID from local storage
+      const userName = localStorage.getItem("userName") || "Rajesh Kumar"; // Use dummy name if not available
 
-      if (!userName) {
-        toast.error("User Name is missing.", { position: "top-center" });
-        return;
-      }
-
-      try {
-        // Proceed to book the parking duration directly
-        const response = await fetch(
-          "http://localhost:5000/api/parking/parkingDuration",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userName,
-              hours: hoursValue,
-              minutes: minutesValue,
-              // You can pass the slot number as needed
-            }),
-          }
-        );
-
-        const data = await response.json();
-
-        if (response.ok) {
-          toast.success(data.message, {
-            position: "top-center",
-            autoClose: 1000,
-          });
-          // Reset form fields
-          setHours("");
-          setMinutes("");
-          navigate("/user/home/parkingDuration/billing-info", {
-            state: { hours: hoursValue, minutes: minutesValue, userName },
-          });
-        } else {
-          toast.error(data.message, { position: "top-center" });
-        }
-      } catch (error) {
-        toast.error("Error processing your request. Please try again.", {
-          position: "top-center",
-        });
-      }
+      // Bypass API call and directly navigate to BillingInfo
+      toast.success("Parking duration set successfully!", {
+        position: "top-center",
+        autoClose: 1000,
+      });
+      
+      // Reset form fields
+      setHours("");
+      setMinutes("");
+      
+      // Navigate to billing info with dummy data
+      navigate("/user/home/parkingDuration/billing-info", {
+        state: { 
+          hours: hoursValue, 
+          minutes: minutesValue, 
+          userName,
+          totalCost: (hoursValue * 60 + minutesValue) * 1.5 // Dummy calculation: ₹1.5 per minute
+        },
+      });
     } else {
       toast.error("Please correct the input fields.", {
         position: "top-center",

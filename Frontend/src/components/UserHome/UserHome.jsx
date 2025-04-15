@@ -8,37 +8,9 @@ const UserHome = () => {
   const navigate = useNavigate(); // Use navigate
 
   // Function to check slot availability
-  const checkSlotAvailability = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/slots/check-availability"
-      );
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-      const availableSlotIndex = data.slots.findIndex((slot) => slot === 0); // Get the index of the first available slot
-
-      if (availableSlotIndex !== -1) {
-        // If slots are available, navigate to parking duration
-        navigate("/user/home/parkingDuration");
-      } else {
-        // Show basic toast notification if no slots are available
-        toast(
-          "No slots available, please try again after some time. Thank you",
-          {
-            position: "top-center", // Directly passing the position string
-          }
-        );
-      }
-    } catch (error) {
-      console.error("Error checking slot availability", error);
-      toast("Failed to check slot availability. Please try again.", {
-        position: "top-center", // Directly passing the position string
-      });
-    }
+  const handleBookNow = async () => {
+    // Bypass API call and directly navigate to ParkingDuration
+    navigate("/user/home/parkingDuration");
   };
 
   // Handle the "Find on Map" button click
@@ -53,7 +25,7 @@ const UserHome = () => {
 
   // Handle the "Book Now" button click
   const handleBookNowClick = () => {
-    checkSlotAvailability(); // Check slot availability
+    handleBookNow(); // Check slot availability
   };
 
   return (

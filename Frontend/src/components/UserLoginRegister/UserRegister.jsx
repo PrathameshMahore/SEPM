@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { API_ENDPOINTS } from '../../config/api';
 
 const UserRegister = () => {
   const [name, setName] = useState('');
@@ -21,7 +22,7 @@ const UserRegister = () => {
 
     // Make API request to backend
     try {
-      const response = await fetch('/api/users/register', {
+      const response = await fetch(API_ENDPOINTS.USER_REGISTER, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

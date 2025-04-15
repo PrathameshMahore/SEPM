@@ -10,7 +10,12 @@ const AdminHome = () => {
     console.log("Fetching slot availability..."); // Log fetching slots
     try {
       const response = await fetch(
-        "http://localhost:5000/api/slots/check-availability" // Adjust URL as needed
+        "http://localhost:5000/api/slots/check-availability", // Adjust URL as needed
+        {
+          headers: {
+            'Accept': 'application/json'
+          }
+        }
       );
 
       if (!response.ok) {
@@ -48,6 +53,7 @@ const AdminHome = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Accept': 'application/json'
         },
       });
 
@@ -73,6 +79,7 @@ const AdminHome = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            'Accept': 'application/json'
           },
         }
       );

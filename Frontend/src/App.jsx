@@ -19,6 +19,10 @@ import ParkingDuration from "./components/Booking/ParkingDuration";
 import BillingInfo from "./components/Booking/BillingInfo";
 import Payment from "./components/Booking/Payment";
 import SuccessMessage from "./components/Booking/SuccessMessage";
+import NearbyParkingList from "./components/NearbyParking/NearbyParkingList";
+import ParkingList from "./components/Parking/ParkingList";
+import SearchResults from "./components/Search/SearchResults";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   const location = useLocation();
@@ -46,6 +50,10 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminHome />} />
           <Route path="/user/home/map" element={<Map />} />
           <Route path="/user/home/history" element={<UserHistory />} />
+          <Route path="/user/home/nearby-parking" element={<NearbyParkingList />} />
+          <Route path="/user/home/parking" element={<ParkingList />} />
+          <Route path="/user/home/search" element={<SearchResults />} />
+          <Route path="/user/home/profile" element={<Profile />} />
           <Route
             path="/user/home/parkingDuration"
             element={<ParkingDuration />}

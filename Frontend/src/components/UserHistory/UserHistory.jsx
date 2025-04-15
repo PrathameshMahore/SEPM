@@ -8,35 +8,58 @@ const UserHistory = () => {
   const [error, setError] = useState(null); // State to handle errors
 
   useEffect(() => {
-    const fetchHistoryData = async () => {
-      setLoading(true); // Set loading to true when fetching starts
-      setError(null); // Reset error state
-
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/parkingHistory/history",
-          {
-            method: "GET", // Specify the HTTP method
-            headers: {
-              "Content-Type": "application/json", // Set content type to JSON
-            },
-          }
-        ); // Adjust the URL based on your server
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+    // Simulate loading
+    const timer = setTimeout(() => {
+      // Dummy data with Indian names and realistic values
+      const dummyHistoryData = [
+        {
+          _id: "1",
+          userName: "Rajesh Kumar",
+          parkingDuration: "2 hours 30 minutes",
+          totalPrice: "₹150",
+          paymentDateTime: new Date(Date.now() - 86400000 * 2).toISOString(), // 2 days ago
+          slotNumber: "A-12"
+        },
+        {
+          _id: "2",
+          userName: "Priya Sharma",
+          parkingDuration: "1 hour 15 minutes",
+          totalPrice: "₹75",
+          paymentDateTime: new Date(Date.now() - 86400000 * 5).toISOString(), // 5 days ago
+          slotNumber: "B-05"
+        },
+        {
+          _id: "3",
+          userName: "Amit Patel",
+          parkingDuration: "4 hours 45 minutes",
+          totalPrice: "₹225",
+          paymentDateTime: new Date(Date.now() - 86400000 * 7).toISOString(), // 7 days ago
+          slotNumber: "C-08"
+        },
+        {
+          _id: "4",
+          userName: "Sneha Reddy",
+          parkingDuration: "3 hours 20 minutes",
+          totalPrice: "₹180",
+          paymentDateTime: new Date(Date.now() - 86400000 * 10).toISOString(), // 10 days ago
+          slotNumber: "D-15"
+        },
+        {
+          _id: "5",
+          userName: "Vikram Singh",
+          parkingDuration: "5 hours 10 minutes",
+          totalPrice: "₹280",
+          paymentDateTime: new Date(Date.now() - 86400000 * 15).toISOString(), // 15 days ago
+          slotNumber: "E-03"
         }
-        const data = await response.json(); // Parse JSON response
-        setHistoryData(data); // Set the fetched data to state
-      } catch (err) {
-        setError("Failed to fetch transaction history"); // Handle errors
-        toast.error(err.message, { position: "top-center" }); // Notify error
-      } finally {
-        setLoading(false); // Set loading to false once the request is complete
-      }
-    };
+      ];
+      
+      setHistoryData(dummyHistoryData);
+      setLoading(false);
+    }, 1000); // Simulate 1 second loading time
 
-    fetchHistoryData(); // Call the fetch function
-  }, []); // Empty dependency array means this effect runs once on mount
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="p-4">
@@ -48,7 +71,7 @@ const UserHistory = () => {
       <div className="h-full w-full grid grid-cols-1 md:grid-cols-2 gap-8">
         {historyData.map((entry) => (
           <div
-            key={entry._id} // Use MongoDB's unique ID
+            key={entry._id}
             className="p-6 border border-gray-300 rounded-lg shadow-lg bg-white flex flex-col justify-between"
             style={{
               fontFamily: '"Georgia", serif',
@@ -82,6 +105,10 @@ const UserHistory = () => {
                 <span className="text-gray-600">
                   {new Date(entry.paymentDateTime).toLocaleTimeString()}
                 </span>
+              </div>
+              <div className="flex justify-between mb-2">
+                <span className="font-semibold text-lg">Slot Number:</span>
+                <span className="text-gray-600">{entry.slotNumber}</span>
               </div>
             </div>
           </div>
